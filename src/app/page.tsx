@@ -1,13 +1,14 @@
-import { ArrowRight, BookOpenCheck, Check, GitBranch, UserRound } from "lucide-react";
+import { ArrowRight, BookOpenCheck, GitBranch, UserRound } from "lucide-react";
 import Link from "next/link";
 import { AnswerSource } from "@/components/answer-source";
 import { CodePane } from "@/components/dev/code-pane";
+import { PlanCards } from "@/components/plan-cards";
 import { ProductTabs } from "@/components/product-tabs";
-import { Button, Container, CropShot, SectionHead, ShotFrame } from "@/components/ui";
+import { Button, Container, CropShot, FocusShot, SectionHead, ShotFrame, SnapRow } from "@/components/ui";
 import { ChannelHub } from "@/components/visuals/channel-hub";
+import { WorkflowSteps } from "@/components/workflow-steps";
 import { highlight } from "@/lib/highlight";
-import { appLinks, PLANS } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { appLinks } from "@/lib/site";
 
 const SEARCH = `curl -X POST https://YOUR_API_HOST/v1/knowledge/{kb_id}/search \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
@@ -26,64 +27,70 @@ export default async function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 sm:pt-28">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[780px]" style={{ background: "radial-gradient(60% 55% at 50% 0%, rgb(var(--accent) / 0.13), transparent 70%)" }} />
+      <section className="relative overflow-hidden pt-12 sm:pt-20 lg:pt-28">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[620px] lg:h-[780px]" style={{ background: "radial-gradient(60% 55% at 50% 0%, rgb(var(--accent) / 0.13), transparent 70%)" }} />
         <Container className="text-center">
-          <h1 className="mx-auto max-w-[17ch] font-display text-[44px] font-bold leading-[1.02] text-balance sm:text-6xl lg:text-[72px]">
+          <h1 className="mx-auto max-w-[17ch] font-display text-[clamp(2.3rem,7.2vw,4.5rem)] font-bold leading-[1.03] text-balance">
             Answer customers from your own documents
           </h1>
-          <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted text-balance sm:text-xl">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted text-balance sm:mt-7 sm:text-xl">
             Vicero replies on your website, WhatsApp and Instagram, shows which passage each answer came from, and hands over to a person when it isn&apos;t sure.
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Button href={appLinks.signup} external size="lg">Start free trial</Button>
-            <Button href="/product" variant="secondary" size="lg">See the product</Button>
+          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center">
+            <Button href={appLinks.signup} external size="lg" className="w-full sm:w-auto">Start free trial</Button>
+            <Button href="/product" variant="secondary" size="lg" className="w-full sm:w-auto">See the product</Button>
           </div>
           <p className="mt-4 text-sm text-faint">10 days free. No card needed.</p>
         </Container>
-        <Container className="mt-16 max-w-[1180px] sm:mt-20">
+        <Container className="mt-10 max-w-[1180px] sm:mt-16 lg:mt-20">
           <ShotFrame className="rounded-b-none border-b-0">
-            <CropShot name="dashboard" ratio="16 / 8.6" fade priority alt="The Vicero dashboard for a furniture shop: 3.8K conversations in 30 days, 89% resolved without a person, with daily activity" />
+            {/* Phone: the stats and activity panel up close. Tablet and up: the dashboard, fading out. */}
+            <div className="sm:hidden">
+              <FocusShot name="dashboard" ratio="4 / 3.3" zoom={2.08} x={18.2} y={9} alt="The Vicero dashboard: 3.8K conversations in 30 days, 89% resolved without a person, and daily activity" />
+            </div>
+            <div className="hidden sm:block">
+              <CropShot name="dashboard" ratio="16 / 8.6" fade priority alt="The Vicero dashboard for a furniture shop: 3.8K conversations in 30 days, 89% resolved without a person, with daily activity" />
+            </div>
           </ShotFrame>
         </Container>
       </section>
 
-      {/* Three ideas */}
-      <section className="border-y border-border bg-surface py-20 sm:py-28">
+      {/* Three ideas: swipeable on phones */}
+      <section className="border-y border-border bg-surface py-14 md:py-20 lg:py-28">
         <Container>
-          <div className="grid gap-12 md:grid-cols-3 md:gap-10">
+          <SnapRow>
             {FEATURES.map(({ Icon, title, body, href, cta }) => (
-              <div key={title}>
+              <div key={title} className="w-[82%] shrink-0 snap-start rounded-xl border border-border-strong bg-bg p-6 sm:w-[60%] md:w-auto md:rounded-none md:border-0 md:bg-transparent md:p-0">
                 <Icon className="h-6 w-6 text-accent" aria-hidden="true" />
-                <h2 className="mt-5 font-display text-2xl font-bold leading-tight">{title}</h2>
-                <p className="mt-3 leading-relaxed text-muted">{body}</p>
-                <Link href={href} className="mt-5 inline-flex items-center gap-1.5 font-semibold text-accent hover:underline">{cta} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+                <h2 className="mt-4 font-display text-xl font-bold leading-tight md:mt-5 md:text-2xl">{title}</h2>
+                <p className="mt-2 leading-relaxed text-muted md:mt-3">{body}</p>
+                <Link href={href} className="mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-accent hover:underline md:mt-5">{cta} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
               </div>
             ))}
-          </div>
+          </SnapRow>
         </Container>
       </section>
 
       {/* Answers show their source */}
-      <section className="py-24 sm:py-36">
+      <section className="py-16 md:py-24 lg:py-36">
         <Container>
           <SectionHead className="mx-auto text-center" title="Every answer shows where it came from" lead="Ask a question and the passage it was answered from lights up in your own document. Customers can check it. So can you." />
-          <div className="mx-auto mt-16 max-w-[1040px]"><AnswerSource /></div>
+          <div className="mx-auto mt-10 max-w-[1040px] md:mt-16"><AnswerSource /></div>
         </Container>
       </section>
 
       {/* The product */}
-      <section className="border-y border-border bg-surface py-24 sm:py-36">
+      <section className="border-y border-border bg-surface py-16 md:py-24 lg:py-36">
         <Container className="max-w-[1240px]">
           <SectionHead className="mx-auto text-center" title="Your whole support desk in one place" lead="Read every conversation, step in when it matters, and see what your agents are doing." />
-          <div className="mt-16">
+          <div className="mt-10 md:mt-16">
             <ProductTabs
               items={[
-                { id: "inbox", label: "Inbox", shot: "inbox", alt: "Inbox: a customer asks about delivery, the agent answers, and a person from the team takes over" },
-                { id: "conversations", label: "Conversations", shot: "conversations", alt: "A list of recent conversations across WhatsApp, the web widget and Instagram" },
-                { id: "crm", label: "Customers", shot: "contacts", alt: "CRM listing customers with their channel, stage and last activity" },
-                { id: "kb", label: "Knowledge", shot: "knowledge", alt: "A knowledge base with documents and their indexing status" },
-                { id: "stats", label: "Analytics", shot: "analytics", alt: "Analytics with conversations, resolution rate, latency and cost over 30 days" },
+                { id: "inbox", label: "Inbox", shot: "inbox", alt: "Inbox: a customer asks about delivery, the agent answers, and a person from the team takes over", crop: { zoom: 1.78, x: 42.2, y: 13, ratio: "1 / 1" } },
+                { id: "conversations", label: "Conversations", shot: "conversations", alt: "A list of recent conversations across WhatsApp, the web widget and Instagram", crop: { zoom: 1.55, x: 19, y: 10 } },
+                { id: "crm", label: "Customers", shot: "contacts", alt: "CRM listing customers with their channel, stage and last activity", crop: { zoom: 1.55, x: 19, y: 10 } },
+                { id: "kb", label: "Knowledge", shot: "knowledge", alt: "A knowledge base with documents and their indexing status", crop: { zoom: 1.55, x: 19, y: 10 } },
+                { id: "stats", label: "Analytics", shot: "analytics", alt: "Analytics with conversations, resolution rate, latency and cost over 30 days", crop: { zoom: 1.6, x: 19, y: 8 } },
               ]}
             />
           </div>
@@ -91,29 +98,31 @@ export default async function Home() {
       </section>
 
       {/* Channels */}
-      <section className="py-24 sm:py-36">
+      <section className="py-16 md:py-24 lg:py-36">
         <Container>
-          <SectionHead className="mx-auto text-center" title="One agent on every channel" lead="Set up the persona and documents once. WhatsApp, Instagram, Messenger, Telegram, Slack, Discord, email and your website all give the same answers." />
-          <div className="mx-auto mt-14 max-w-[820px]"><ChannelHub /></div>
+          <SectionHead className="mx-auto text-center" title="One agent on every channel" lead="Set up the persona and documents once. Every channel gives the same answers." />
+          <div className="mx-auto mt-10 max-w-[820px] md:mt-14"><ChannelHub /></div>
         </Container>
       </section>
 
       {/* Automations */}
-      <section className="dark bg-bg py-24 text-text sm:py-36">
+      <section className="dark bg-bg py-16 text-text md:py-24 lg:py-36">
         <Container className="max-w-[1240px]">
-          <SectionHead className="mx-auto text-center" title="Let it do things, not only answer" lead="Build a workflow with conditions, approvals and calls to your other tools. Test it, then publish. Anything risky waits for a person." />
-          <ShotFrame className="mt-16"><CropShot name="workflow" ratio="16 / 8.6" alt="Workflow builder: a refund request is checked, then approved by a person or handled automatically" /></ShotFrame>
-          <p className="mt-8 text-center"><Link href="/automations" className="font-semibold text-accent hover:underline">How automations work</Link></p>
+          <SectionHead className="mx-auto text-center" title="Let it do things, not only answer" lead="Build a workflow with conditions, approvals and calls to your other tools. Anything risky waits for a person." />
+          {/* Phone: the same flow as a readable sequence. Tablet and up: the real builder. */}
+          <div className="mx-auto mt-10 max-w-md md:hidden"><WorkflowSteps /></div>
+          <ShotFrame className="mt-16 hidden md:block"><CropShot name="workflow" ratio="16 / 8.6" alt="Workflow builder: a refund request is checked, then approved by a person or handled automatically" /></ShotFrame>
+          <p className="mt-8 text-center"><Link href="/automations" className="inline-flex min-h-11 items-center font-semibold text-accent hover:underline">How automations work</Link></p>
         </Container>
       </section>
 
       {/* Developers */}
-      <section className="py-24 sm:py-36">
+      <section className="py-16 md:py-24 lg:py-36">
         <Container>
-          <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
             <div>
               <SectionHead title="Build on it" lead="A REST API, signed webhooks and a widget you embed with one tag." />
-              <Link href="/developers" className="mt-8 inline-flex items-center gap-1.5 font-semibold text-accent hover:underline">Explore the API <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <Link href="/developers" className="mt-6 inline-flex min-h-11 items-center gap-1.5 font-semibold text-accent hover:underline lg:mt-8">Explore the API <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
             <CodePane title="Search a knowledge base" html={searchHtml} raw={SEARCH} />
           </div>
@@ -121,36 +130,21 @@ export default async function Home() {
       </section>
 
       {/* Pricing */}
-      <section className="border-t border-border bg-surface py-24 sm:py-36">
+      <section className="border-t border-border bg-surface py-16 md:py-24 lg:py-36">
         <Container>
           <SectionHead className="mx-auto text-center" title="Start free. Pay when it works." lead="Every plan begins with a 10-day trial. No card needed." />
-          <div className="mx-auto mt-16 grid max-w-[1040px] gap-5 md:grid-cols-3">
-            {PLANS.map((p) => (
-              <div key={p.id} className={cn("flex flex-col rounded-xl border bg-bg p-8", p.featured ? "border-accent shadow-[0_0_0_1px_rgb(var(--accent))]" : "border-border-strong")}>
-                <p className="font-display text-xl font-bold">{p.name}</p>
-                <p className="mt-4 font-display text-5xl font-bold leading-none">${p.price}<span className="text-base font-medium text-faint"> a month</span></p>
-                <p className="mt-4 text-muted">{p.blurb}</p>
-                <ul className="mt-6 flex-1 space-y-2.5 text-[15px]">
-                  <li className="flex gap-2.5"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success-text" aria-hidden="true" /><span><strong>{p.messages}</strong> messages a month</span></li>
-                  {p.features.slice(0, 3).map((f) => (
-                    <li key={f} className="flex gap-2.5"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success-text" aria-hidden="true" />{f}</li>
-                  ))}
-                </ul>
-                <Button href={appLinks.signup} external variant={p.featured ? "primary" : "secondary"} className="mt-8 w-full">Start free trial</Button>
-              </div>
-            ))}
-          </div>
-          <p className="mt-8 text-center"><Link href="/pricing" className="font-semibold text-accent hover:underline">Compare every plan</Link></p>
+          <div className="mx-auto mt-10 max-w-[1040px] md:mt-16"><PlanCards /></div>
+          <p className="mt-6 text-center md:mt-8"><Link href="/pricing" className="inline-flex min-h-11 items-center font-semibold text-accent hover:underline">Compare every plan</Link></p>
         </Container>
       </section>
 
       {/* Closing */}
-      <section className="bg-accent-strong py-24 text-center text-on-accent sm:py-32">
+      <section className="bg-accent-strong py-16 text-center text-on-accent md:py-24 lg:py-32">
         <Container>
-          <h2 className="mx-auto max-w-3xl font-display text-4xl font-bold leading-[1.02] text-balance sm:text-6xl">Put your documents to work today</h2>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <h2 className="mx-auto max-w-3xl font-display text-[clamp(2rem,6vw,3.75rem)] font-bold leading-[1.04] text-balance">Put your documents to work today</h2>
+          <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center">
             <Button href={appLinks.signup} external size="lg" variant="ink">Start free trial</Button>
-            <Link href="/contact" className="px-3 py-2 font-semibold underline underline-offset-4">Talk to us first</Link>
+            <Link href="/contact" className="inline-flex min-h-11 items-center justify-center px-3 py-2 font-semibold underline underline-offset-4">Talk to us first</Link>
           </div>
         </Container>
       </section>

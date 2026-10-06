@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 function Stage({ n, title, body, children }: { n: number; title: string; body: string; children: ReactNode }) {
   return (
-    <li className="flex flex-col">
+    <li className="flex w-[78%] shrink-0 snap-start flex-col sm:w-auto sm:shrink">
       <div aria-hidden="true" className="flex h-[132px] items-center justify-center overflow-hidden rounded-lg border border-border-strong bg-surface p-3">{children}</div>
       <p className="mt-4 font-display text-xl font-bold"><span className="mr-2 text-accent">{n}</span>{title}</p>
       <p className="mt-1.5 text-[15px] leading-snug text-muted">{body}</p>
@@ -13,7 +13,7 @@ function Stage({ n, title, body, children }: { n: number; title: string; body: s
 /** Five small pictures of what happens to a document, then a question. Decorative; the text carries the meaning. */
 export function PipelineVisual() {
   return (
-    <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
+    <ol className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 no-scrollbar sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5">
       <Stage n={1} title="Add sources" body="PDF, Word, text, CSV, Markdown, a web page or pasted text.">
         <div className="w-full space-y-1.5">
           {[["PDF", "catalogue-2026.pdf"], ["MD", "shipping-policy.md"], ["URL", "lumenhome.in/care"]].map(([t, n]) => (

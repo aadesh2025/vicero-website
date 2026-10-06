@@ -55,7 +55,7 @@ export default async function DevelopersPage() {
       </Section>
 
       <Section className="pt-0">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+        <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
             <SectionHead title="Put it on your website with one tag." lead="The widget has no dependencies and runs in a Shadow DOM, so your site's CSS can't break it. The public key is safe to leave in client-side HTML." />
             <CodePane className="mt-8" title="Paste before </body>" html={embedHtml} raw={EMBED} />

@@ -14,7 +14,7 @@ export function EventExplorer({ events, verifyHtml, verifyRaw }: { events: Webho
   return (
     <div className="space-y-8">
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <div role="tablist" aria-label="Webhook events" aria-orientation="vertical" className="flex flex-col border-t border-text/80">
+        <div role="tablist" aria-label="Webhook events" aria-orientation="horizontal" className="-mx-5 flex gap-2 overflow-x-auto px-5 no-scrollbar sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-col lg:gap-0 lg:border-t lg:border-text/80 lg:px-0">
           {events.map((e) => {
             const on = e.name === name;
             return (
@@ -23,7 +23,7 @@ export function EventExplorer({ events, verifyHtml, verifyRaw }: { events: Webho
                 role="tab"
                 aria-selected={on}
                 onClick={() => setName(e.name)}
-                className={cn("flex items-center gap-2.5 border-b border-border py-2.5 text-left font-mono text-[13px] transition-colors", on ? "font-bold text-accent" : "text-muted hover:text-text")}
+                className={cn("flex min-h-11 shrink-0 items-center gap-2.5 rounded-md border px-3 text-left font-mono text-[13px] transition-colors lg:min-h-0 lg:rounded-none lg:border-0 lg:border-b lg:border-border lg:px-0 lg:py-2.5", on ? "border-text font-bold text-accent" : "border-border-strong text-muted hover:text-text")}
               >
                 <span aria-hidden="true" className={cn("h-2 w-2 rounded-full", on ? "bg-accent-strong" : "bg-border-strong")} />
                 {e.name}

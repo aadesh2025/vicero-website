@@ -19,15 +19,15 @@ const NODES: { name: string; body: string; Icon: ComponentType<{ className?: str
 
 export function NodeLibrary() {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
       {NODES.map((n) => (
         <li key={n.name} className="flex overflow-hidden rounded-md border border-border-strong bg-surface">
           <span aria-hidden="true" className={cn("w-1.5 shrink-0", n.bar)} />
-          <div className="flex gap-3 p-3.5">
+          <div className="flex gap-2.5 p-3 sm:gap-3 sm:p-3.5">
             <n.Icon className="mt-0.5 h-4 w-4 shrink-0 text-text" />
             <div>
               <p className="font-display text-base font-bold leading-tight">{n.name}</p>
-              <p className="mt-1 text-sm leading-snug text-muted">{n.body}</p>
+              <p className="mt-1 hidden text-sm leading-snug text-muted sm:block">{n.body}</p>
             </div>
           </div>
         </li>

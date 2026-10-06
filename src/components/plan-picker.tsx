@@ -61,12 +61,12 @@ export function PlanPicker() {
           <legend className="font-display text-xl font-bold">I need</legend>
           <div className="mt-3 space-y-2.5">
             {NEEDS.map((n) => (
-              <label key={n.id} className="flex cursor-pointer items-center gap-3 text-[15px]">
+              <label key={n.id} className="flex min-h-11 cursor-pointer items-center gap-3 text-[15px]">
                 <input
                   type="checkbox"
                   checked={!!needs[n.id]}
                   onChange={(e) => setNeeds((s) => ({ ...s, [n.id]: e.target.checked }))}
-                  className="h-5 w-5 accent-[rgb(61,59,255)]"
+                  className="h-6 w-6 shrink-0 accent-[rgb(61,59,255)]"
                 />
                 {n.label}
               </label>

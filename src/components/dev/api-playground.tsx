@@ -26,7 +26,7 @@ export function ApiPlayground({ endpoints }: { endpoints: Endpoint[] }) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-      <div role="tablist" aria-label="Endpoints" aria-orientation="vertical" className="flex flex-col border-t border-text/80">
+      <div role="tablist" aria-label="Endpoints" aria-orientation="horizontal" className="-mx-5 flex gap-2 overflow-x-auto px-5 no-scrollbar sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-col lg:gap-0 lg:border-t lg:border-text/80 lg:px-0">
         {endpoints.map((e) => {
           const on = e.id === id;
           return (
@@ -35,13 +35,13 @@ export function ApiPlayground({ endpoints }: { endpoints: Endpoint[] }) {
               role="tab"
               aria-selected={on}
               onClick={() => setId(e.id)}
-              className={cn("border-b border-border py-3.5 pr-3 text-left transition-colors", on ? "text-text" : "text-muted hover:text-text")}
+              className={cn("min-h-11 shrink-0 rounded-md border px-3 py-2 text-left transition-colors lg:rounded-none lg:border-0 lg:border-b lg:border-border lg:py-3.5 lg:pl-0 lg:pr-3", on ? "border-text text-text" : "border-border-strong text-muted hover:text-text")}
             >
               <span className="flex items-center gap-2">
                 <span className={cn("rounded-sm px-1.5 py-0.5 font-mono text-[11px] font-bold", methodTone[e.method])}>{e.method}</span>
-                <span className={cn("font-display text-lg font-bold", on && "text-accent")}>{e.title}</span>
+                <span className={cn("font-display text-base font-bold lg:text-lg", on && "text-accent")}>{e.title}</span>
               </span>
-              <span className="mt-1 block truncate font-mono text-xs text-faint">{e.path}</span>
+              <span className="mt-1 hidden truncate font-mono text-xs text-faint lg:block">{e.path}</span>
             </button>
           );
         })}
@@ -63,7 +63,7 @@ export function ApiPlayground({ endpoints }: { endpoints: Endpoint[] }) {
               <Tabs.Trigger
                 key={s.lang}
                 value={s.lang}
-                className="rounded-md border border-border-strong px-3 py-1.5 text-sm font-semibold text-muted transition-colors hover:text-text data-[state=active]:border-text data-[state=active]:bg-text data-[state=active]:text-bg"
+                className="min-h-11 rounded-md border border-border-strong px-3.5 text-sm font-semibold text-muted lg:min-h-0 lg:py-1.5 transition-colors hover:text-text data-[state=active]:border-text data-[state=active]:bg-text data-[state=active]:text-bg"
               >
                 {s.label}
               </Tabs.Trigger>

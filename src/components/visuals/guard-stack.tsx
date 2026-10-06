@@ -12,9 +12,9 @@ const STEPS = [
 /** The path a message takes. Guards are marked, because they are the point. */
 export function GuardStack() {
   return (
-    <ol className="grid gap-3 lg:grid-cols-6" aria-label="How a message is checked on its way to a reply">
+    <ol className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 pt-3 no-scrollbar sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-6" aria-label="How a message is checked on its way to a reply">
       {STEPS.map((s, i) => (
-        <li key={s.title} className={cn("relative rounded-lg border p-4", s.guard ? "border-accent bg-accent-soft" : "border-border-strong bg-surface")}>
+        <li key={s.title} className={cn("relative w-[72%] shrink-0 snap-start rounded-lg border p-4 sm:w-auto sm:shrink", s.guard ? "border-accent bg-accent-soft" : "border-border-strong bg-surface")}>
           {s.guard && <span className="absolute -top-2.5 left-3 rounded-sm bg-accent-strong px-1.5 py-0.5 text-[11px] font-semibold text-on-accent">Check in code</span>}
           <p className="font-display text-lg font-bold leading-tight">{s.title}</p>
           <p className="mt-2 text-sm leading-snug text-muted">{s.body}</p>

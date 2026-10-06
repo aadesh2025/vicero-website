@@ -16,7 +16,7 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div className="border-t border-text/80 pt-5">
               <h2 className="font-display text-xl font-bold">Email</h2>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="mt-2 block font-semibold text-accent underline underline-offset-4">{CONTACT_EMAIL}</a>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4">{CONTACT_EMAIL}</a>
             </div>
             <div className="border-t border-text/80 pt-5">
               <h2 className="font-display text-xl font-bold">Rather just try it?</h2>

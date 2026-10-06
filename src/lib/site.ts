@@ -72,12 +72,35 @@ export const PLANS = [
 ] as const;
 
 export const CHANNELS = [
-  { id: "widget", label: "Website widget" },
-  { id: "whatsapp", label: "WhatsApp" },
-  { id: "instagram", label: "Instagram" },
-  { id: "facebook", label: "Messenger" },
-  { id: "telegram", label: "Telegram" },
-  { id: "slack", label: "Slack" },
-  { id: "discord", label: "Discord" },
-  { id: "email", label: "Email" },
+  { id: "widget", label: "Website", body: "One script tag. It runs in a Shadow DOM, so your site's CSS can't break it, and replies stream in as they're written.", plan: "All plans" },
+  { id: "whatsapp", label: "WhatsApp", body: "Signed inbound webhooks, and the 24-hour service window is tracked so you don't message outside it by accident.", plan: "Pro and Business" },
+  { id: "instagram", label: "Instagram", body: "Answer direct messages from the same agent and documents, with hand-off to your team.", plan: "Pro and Business" },
+  { id: "facebook", label: "Messenger", body: "Page conversations land in the shared inbox with their full history.", plan: "Pro and Business" },
+  { id: "telegram", label: "Telegram", body: "Add a bot token and conversations arrive. The webhook is registered for you.", plan: "Business" },
+  { id: "slack", label: "Slack", body: "Let your team ask the agent in the place they already work.", plan: "Business" },
+  { id: "discord", label: "Discord", body: "Community support with the same grounded answers.", plan: "Business" },
+  { id: "email", label: "Email", body: "Threaded replies from a support address, with the same hand-off.", plan: "Business" },
 ] as const;
+
+export type Cell = string | boolean;
+/** Plan comparison rows: [Starter, Pro, Business]. Mirrors plans.py by hand, like PLANS above. */
+export const COMPARE: { label: string; v: [Cell, Cell, Cell] }[] = [
+  { label: "Messages a month", v: ["2,000", "10,000", "30,000"] },
+  { label: "Agents", v: ["3", "10", "30"] },
+  { label: "Workspaces", v: ["1", "2", "5"] },
+  { label: "Knowledge bases", v: ["1", "5", "20"] },
+  { label: "Documents", v: ["20", "100", "500"] },
+  { label: "Storage", v: ["500 MB", "5 GB", "10 GB"] },
+  { label: "Team members", v: ["1", "5", "15"] },
+  { label: "Website widget", v: [true, true, true] },
+  { label: "WhatsApp, Instagram, Messenger", v: [false, true, true] },
+  { label: "Telegram, Slack, Discord, email", v: [false, false, true] },
+  { label: "Workflows", v: [false, "10", "Unlimited"] },
+  { label: "n8n automations", v: [false, true, true] },
+  { label: "Tools (HTTP and MCP)", v: [false, "8", "Unlimited"] },
+  { label: "Outbound webhooks", v: [false, "5", "Unlimited"] },
+  { label: "API access", v: ["Read", "Full", "Full"] },
+  { label: "Analytics", v: ["Basic", "Advanced", "Advanced and export"] },
+  { label: "Remove Vicero branding", v: [false, true, true] },
+  { label: "Support", v: ["Email", "Priority", "Priority"] },
+];

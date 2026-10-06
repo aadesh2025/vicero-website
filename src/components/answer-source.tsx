@@ -48,7 +48,7 @@ export function AnswerSource({ className }: { className?: string }) {
     <div className={className}>
       <div className="grid overflow-hidden rounded-lg border border-border-strong bg-surface shadow-[0_30px_60px_-30px_rgb(13_14_18/0.35)] lg:grid-cols-[1.05fr_1fr]">
         {/* Your documents */}
-        <div className="border-b border-border lg:border-b-0 lg:border-r">
+        <div className="lg:border-r lg:border-border">
           <div className="flex items-baseline justify-between border-b border-border px-6 py-3.5">
             <p className="font-display text-base font-bold">Your documents</p>
             <p className="text-sm text-faint">3 files</p>
@@ -57,7 +57,7 @@ export function AnswerSource({ className }: { className?: string }) {
             {DOCS.map((d, i) => {
               const on = i === active && answered;
               return (
-                <div key={d.file} className="px-6 py-5">
+                <div key={d.file} className={cn("px-5 py-4 sm:px-6 sm:py-5", i !== active && "max-lg:hidden")}>
                   <p className={cn("text-sm font-semibold", i === active ? "text-text" : "text-faint")}>{d.file}</p>
                   <p className="mt-2 text-[15px] leading-7">
                     {d.before}
@@ -82,12 +82,12 @@ export function AnswerSource({ className }: { className?: string }) {
         </div>
 
         {/* The conversation */}
-        <div className="flex flex-col">
-          <div className="flex items-baseline justify-between border-b border-border px-6 py-3.5">
+        <div className="flex flex-col max-lg:order-first max-lg:border-b max-lg:border-border">
+          <div className="flex items-baseline justify-between border-b border-border px-5 py-3.5 sm:px-6">
             <p className="font-display text-base font-bold">Chat on WhatsApp</p>
             <p className="text-sm text-faint">Aarav Mehta</p>
           </div>
-          <div className="flex min-h-[230px] flex-1 flex-col gap-3 px-6 py-6" aria-live="polite">
+          <div className="flex min-h-[190px] flex-1 flex-col gap-3 px-5 py-5 sm:min-h-[230px] sm:px-6 sm:py-6" aria-live="polite">
             <div className="max-w-[85%] self-end rounded-xl rounded-br-sm bg-accent-strong px-4 py-3 text-[15px] leading-snug text-on-accent">{qa.q}</div>
             {phase === "typing" && (
               <div role="status" aria-label="Vicero is typing" className="flex w-16 items-center justify-center gap-1 self-start rounded-xl rounded-bl-sm bg-surface-2 py-3.5">
@@ -109,8 +109,8 @@ export function AnswerSource({ className }: { className?: string }) {
         </div>
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <p className="mr-1 text-sm font-semibold">Ask it:</p>
+      <div className="-mx-5 mt-4 flex items-center gap-2 overflow-x-auto px-5 pb-1 no-scrollbar sm:-mx-8 sm:px-8 lg:mx-0 lg:mt-5 lg:flex-wrap lg:gap-x-3 lg:gap-y-2 lg:px-0">
+        <p className="mr-1 shrink-0 text-sm font-semibold">Ask it:</p>
         {QAS.map((x, i) => (
           <button
             key={x.q}
@@ -118,15 +118,16 @@ export function AnswerSource({ className }: { className?: string }) {
             aria-pressed={i === active}
             onClick={() => ask(i)}
             className={cn(
-              "rounded-md border px-3.5 py-2 text-sm font-medium transition-colors",
+              "min-h-11 shrink-0 rounded-md border px-3.5 py-2 text-sm font-medium transition-colors lg:min-h-0",
               i === active ? "border-text bg-text text-bg" : "border-border-strong hover:border-text",
             )}
           >
             {x.q}
           </button>
         ))}
-        <p className="basis-full text-sm text-faint sm:ml-auto sm:basis-auto">A scripted example of how answers and sources appear.</p>
+        <p className="hidden basis-full text-sm text-faint lg:ml-auto lg:block lg:basis-auto">A scripted example of how answers and sources appear.</p>
       </div>
+      <p className="mt-3 text-sm text-faint lg:hidden">A scripted example of how answers and sources appear.</p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AnswerSource } from "@/components/answer-source";
 import { PageHero } from "@/components/page-hero";
-import { Button, Facts, Section, SectionHead, Shot, ShotFrame } from "@/components/ui";
+import { Button, Facts, FocusShot, Section, SectionHead, Shot, ShotFrame } from "@/components/ui";
 import { PipelineVisual } from "@/components/visuals/pipeline";
 import { appLinks } from "@/lib/site";
 
@@ -21,12 +21,15 @@ export default function KnowledgePage() {
 
       <Section className="pt-0">
         <SectionHead title="From file to answer." lead="What happens to a document, and then to a question." />
-        <div className="mt-16"><PipelineVisual /></div>
+        <div className="mt-10 md:mt-16"><PipelineVisual /></div>
       </Section>
 
       <Section className="pt-0">
         <SectionHead title="Manage the documents your agent reads." lead="Add files and web pages, and see which are indexed and ready." />
-        <ShotFrame className="mt-14"><Shot name="knowledge" alt="A knowledge base with its documents and their status" /></ShotFrame>
+        <ShotFrame className="mt-10 md:mt-14">
+          <div className="md:hidden"><FocusShot name="knowledge" ratio="5 / 4" zoom={1.55} x={19} y={10} alt="A knowledge base with its documents and their status" /></div>
+          <div className="hidden md:block"><Shot name="knowledge" alt="A knowledge base with its documents and their status" /></div>
+        </ShotFrame>
       </Section>
 
       <Section className="pt-0">

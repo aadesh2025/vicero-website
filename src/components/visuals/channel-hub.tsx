@@ -1,5 +1,6 @@
 import { CHANNELS } from "@/lib/site";
 import { LogoMark } from "../logo";
+import { ChannelPicker } from "../channel-picker";
 import { ChannelChip } from "../ui";
 
 /** Eight channels on an ellipse, each joined to the agent by a moving dashed line. Decorative. */
@@ -34,9 +35,7 @@ export function ChannelHub() {
           </div>
         ))}
       </div>
-      <div className="flex flex-wrap gap-2 sm:hidden">
-        {CHANNELS.map((c) => <ChannelChip key={c.id} id={c.id} label={c.label} />)}
-      </div>
+      <div className="sm:hidden"><ChannelPicker /></div>
     </>
   );
 }

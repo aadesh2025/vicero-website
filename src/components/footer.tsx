@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { FooterLinks } from "./footer-links";
 import { appLinks, CONTACT_EMAIL, DOCS_URL, PRODUCT_NAME } from "@/lib/site";
 import { Logo } from "./logo";
 
@@ -42,31 +42,16 @@ const cols = [
 export function Footer() {
   return (
     <footer className="border-t border-border-strong">
-      <div className="mx-auto max-w-[1240px] px-5 py-16 sm:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_repeat(4,1fr)]">
+      <div className="mx-auto max-w-[1240px] px-5 py-12 sm:px-8 md:py-16">
+        <div className="grid gap-10 md:grid-cols-[1fr_2.6fr] md:gap-12 lg:gap-16">
           <div>
             <Logo height={24} />
             <p className="mt-5 max-w-xs leading-relaxed text-muted">Answer customers from your own documents, and show where each answer came from.</p>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="mt-5 inline-block font-semibold text-accent underline underline-offset-4">{CONTACT_EMAIL}</a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="mt-3 inline-flex min-h-11 items-center font-semibold text-accent underline underline-offset-4">{CONTACT_EMAIL}</a>
           </div>
-          {cols.map((c) => (
-            <div key={c.title}>
-              <h3 className="font-display text-base font-bold">{c.title}</h3>
-              <ul className="mt-4 space-y-3">
-                {c.links.map((l) => (
-                  <li key={l.label}>
-                    {l.href.startsWith("http") ? (
-                      <a href={l.href} className="text-muted transition-colors hover:text-text">{l.label}</a>
-                    ) : (
-                      <Link href={l.href} className="text-muted transition-colors hover:text-text">{l.label}</Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <FooterLinks cols={cols} />
         </div>
-        <p className="mt-14 border-t border-border pt-6 text-sm text-faint">
+        <p className="mt-10 border-t md:mt-14 border-border pt-6 text-sm text-faint">
           © {new Date().getFullYear()} {PRODUCT_NAME}. Built by AUROZEN AI.
         </p>
       </div>

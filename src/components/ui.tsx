@@ -18,7 +18,7 @@ type BtnProps = {
 export function Button({ href, children, variant = "primary", size = "md", className, external }: BtnProps) {
   const cls = cn(
     "inline-flex items-center justify-center rounded-md font-semibold transition-colors",
-    size === "lg" ? "h-12 px-6 text-base" : "h-10 px-4 text-sm",
+    size === "lg" ? "h-12 px-6 text-base" : "h-11 px-4 text-sm sm:h-10",
     variant === "primary" && "bg-accent-strong text-on-accent hover:bg-accent-2",
     variant === "secondary" && "border border-text/80 text-text hover:bg-text hover:text-bg",
     variant === "ink" && "bg-ink text-white hover:bg-black",
@@ -39,7 +39,7 @@ export function Container({ children, className }: { children: ReactNode; classN
 
 export function Section({ children, className, id }: { children: ReactNode; className?: string; id?: string }) {
   return (
-    <section id={id} className={cn("py-24 sm:py-36", className)}>
+    <section id={id} className={cn("py-16 md:py-24 lg:py-36", className)}>
       <Container>{children}</Container>
     </section>
   );
@@ -49,8 +49,8 @@ export function Section({ children, className, id }: { children: ReactNode; clas
 export function SectionHead({ title, lead, className }: { title: ReactNode; lead?: ReactNode; className?: string }) {
   return (
     <div className={cn("max-w-3xl", className)}>
-      <h2 className="font-display text-4xl font-bold leading-[1.04] text-balance sm:text-5xl">{title}</h2>
-      {lead && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted [.text-center_&]:mx-auto">{lead}</p>}
+      <h2 className="font-display text-[clamp(1.9rem,4.6vw,3rem)] font-bold leading-[1.06] text-balance">{title}</h2>
+      {lead && <p className="mt-4 max-w-2xl text-base leading-relaxed sm:mt-5 sm:text-lg text-muted [.text-center_&]:mx-auto">{lead}</p>}
     </div>
   );
 }
@@ -58,10 +58,10 @@ export function SectionHead({ title, lead, className }: { title: ReactNode; lead
 /** Facts: a hairline-ruled grid, a title and a sentence each. Used instead of a grid of cards. */
 export function Facts({ items, cols = 3, className }: { items: { title: string; body: ReactNode }[]; cols?: 2 | 3 | 4; className?: string }) {
   return (
-    <div className={cn("grid gap-x-10 gap-y-10", cols === 2 && "md:grid-cols-2", cols === 3 && "md:grid-cols-2 lg:grid-cols-3", cols === 4 && "md:grid-cols-2 lg:grid-cols-4", className)}>
+    <div className={cn("grid gap-x-10 gap-y-8 md:gap-y-10", cols === 2 && "md:grid-cols-2", cols === 3 && "md:grid-cols-2 lg:grid-cols-3", cols === 4 && "md:grid-cols-2 lg:grid-cols-4", className)}>
       {items.map((f) => (
         <div key={f.title} className="border-t border-text/80 pt-5">
-          <h3 className="font-display text-xl font-bold">{f.title}</h3>
+          <h3 className="font-display text-lg font-bold md:text-xl">{f.title}</h3>
           <p className="mt-2 leading-relaxed text-muted">{f.body}</p>
         </div>
       ))}
@@ -129,4 +129,28 @@ export function ChannelChip({ id, label, className }: { id: string; label: strin
 
 export function ChannelDot({ id }: { id: string }) {
   return <span aria-hidden="true" className={cn("mr-2 inline-block h-3 w-3 rounded-full align-baseline", dot[id])} />;
+}
+
+/**
+ * A window onto part of a screenshot, zoomed to a region (x, y are the top-left of that region as a
+ * percentage of the image, zoom is how many times larger than the container it is drawn). Used for
+ * small screens, where the whole app would be unreadable but one panel of it is perfect.
+ */
+export function FocusShot({ name, alt, ratio = "5 / 4", zoom = 1.8, x = 0, y = 0, className }: { name: string; alt: string; ratio?: string; zoom?: number; x?: number; y?: number; className?: string }) {
+  return (
+    <div className={cn("relative overflow-hidden", className)} style={{ aspectRatio: ratio }}>
+      <div className="absolute left-0 top-0" style={{ width: `${zoom * 100}%`, transform: `translate(-${x}%, -${y}%)` }}>
+        <Shot name={name} alt={alt} />
+      </div>
+    </div>
+  );
+}
+
+/** Swipeable row on small screens (next card peeks in); a normal grid from `md` up. */
+export function SnapRow({ children, className, cols = "md:grid-cols-3" }: { children: ReactNode; className?: string; cols?: string }) {
+  return (
+    <div className={cn("-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 no-scrollbar sm:-mx-8 sm:px-8 md:mx-0 md:grid md:gap-10 md:overflow-visible md:px-0 md:pb-0", cols, className)}>
+      {children}
+    </div>
+  );
 }

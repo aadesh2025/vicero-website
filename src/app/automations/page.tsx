@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Button, Facts, Section, SectionHead, Shot, ShotFrame } from "@/components/ui";
 import { N8nDiagram, NodeLibrary, TestsVisual } from "@/components/visuals/automation-bits";
+import { WorkflowSteps } from "@/components/workflow-steps";
 import { appLinks } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Automations", description: "A visual workflow builder, n8n tools, human approval and regression tests for your agents." };
@@ -15,13 +16,14 @@ export default function AutomationsPage() {
       </PageHero>
 
       <Section>
-        <ShotFrame><Shot name="workflow" alt="Workflow builder: a refund request is checked, then approved by a person or handled automatically" /></ShotFrame>
-        <p className="mt-4 text-sm text-faint">The real workflow builder. A refund request branches on a condition and can wait for a person to approve it.</p>
+        <div className="mx-auto max-w-md md:hidden"><WorkflowSteps /></div>
+        <ShotFrame className="hidden md:block"><Shot name="workflow" alt="Workflow builder: a refund request is checked, then approved by a person or handled automatically" /></ShotFrame>
+        <p className="mt-4 hidden text-sm text-faint md:block">The real workflow builder. A refund request branches on a condition and can wait for a person to approve it.</p>
       </Section>
 
       <Section className="pt-0">
         <SectionHead title="Twelve building blocks, and no scripts." lead="Conditions and transforms are whitelisted operations, so a workflow can't run arbitrary code." />
-        <div className="mt-14"><NodeLibrary /></div>
+        <div className="mt-10 md:mt-14"><NodeLibrary /></div>
       </Section>
 
       <Section className="pt-0">
