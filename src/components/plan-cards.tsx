@@ -4,15 +4,17 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { Check } from "lucide-react";
 import { appLinks, PLANS } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { CurrencySwitch, PriceNote, usePricing } from "./pricing-provider";
 import { Button } from "./ui";
 
 type Plan = (typeof PLANS)[number];
 
 function PlanBody({ p }: { p: Plan }) {
+  const { price } = usePricing();
   return (
     <>
       <p className="font-display text-xl font-bold">{p.name}</p>
-      <p className="mt-3 font-display text-5xl font-bold leading-none">${p.price}<span className="text-base font-medium text-faint"> a month</span></p>
+      <p className="mt-3 font-display text-5xl font-bold leading-none">{price(p.id)}<span className="text-base font-medium text-faint"> a month</span></p>
       <p className="mt-4 text-muted">{p.blurb}</p>
       <ul className="mt-6 flex-1 space-y-2.5 text-[15px]">
         <li className="flex gap-2.5"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success-text" aria-hidden="true" /><span><strong>{p.messages}</strong> messages a month</span></li>
@@ -29,6 +31,7 @@ function PlanBody({ p }: { p: Plan }) {
 export function PlanCards() {
   return (
     <>
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><PriceNote /><CurrencySwitch className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-muted" /></div>
       <div className="hidden gap-4 md:grid md:grid-cols-3 lg:gap-5">
         {PLANS.map((p) => (
           <div key={p.id} className={cn("flex flex-col rounded-xl border bg-bg p-6 lg:p-8", p.featured ? "border-accent shadow-[0_0_0_1px_rgb(var(--accent))]" : "border-border-strong")}>

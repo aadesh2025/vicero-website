@@ -4,6 +4,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { Check, Minus } from "lucide-react";
 import { appLinks, COMPARE, PLANS, type Cell } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { PriceNote, usePricing } from "./pricing-provider";
 import { Button } from "./ui";
 
 function Val({ v }: { v: Cell }) {
@@ -14,8 +15,10 @@ function Val({ v }: { v: Cell }) {
 
 /** Tablet and up: the full table, scrolling inside its own box if it must. Phone: one plan's rows at a time. */
 export function ComparePlans() {
+  const { price } = usePricing();
   return (
     <>
+      <PriceNote className="mb-4 text-sm text-faint" />
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[720px] border-collapse text-left">
           <thead>
@@ -24,7 +27,7 @@ export function ComparePlans() {
               {PLANS.map((p) => (
                 <th key={p.id} scope="col" className={cn("px-5 pb-6 align-bottom font-normal", p.featured && "bg-accent-soft")}>
                   <span className="block font-display text-2xl font-bold">{p.name}</span>
-                  <span className="mt-1 block font-display text-4xl font-bold">${p.price}<span className="text-base font-medium text-faint"> a month</span></span>
+                  <span className="mt-1 block font-display text-4xl font-bold">{price(p.id)}<span className="text-base font-medium text-faint"> a month</span></span>
                   <span className="mt-2 block max-w-[220px] text-sm leading-snug text-muted">{p.blurb}</span>
                   <Button href={appLinks.signup} external variant={p.featured ? "primary" : "secondary"} className="mt-4">Start free trial</Button>
                 </th>
@@ -54,7 +57,7 @@ export function ComparePlans() {
         </Tabs.List>
         {PLANS.map((p, pi) => (
           <Tabs.Content key={p.id} value={p.id} className="mt-5 focus-visible:outline-none">
-            <p className="font-display text-4xl font-bold">${p.price}<span className="text-base font-medium text-faint"> a month</span></p>
+            <p className="font-display text-4xl font-bold">{price(p.id)}<span className="text-base font-medium text-faint"> a month</span></p>
             <p className="mt-2 text-muted">{p.blurb}</p>
             <dl className="mt-5 divide-y divide-border border-y border-border">
               {COMPARE.map((r) => (

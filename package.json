@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "e2e": "playwright test -c scripts/playwright.config.ts site.spec.ts",
-    "e2e:responsive": "playwright test -c scripts/playwright.config.ts responsive.spec.ts"
+    "e2e:responsive": "playwright test -c scripts/playwright.config.ts responsive.spec.ts",
+    "e2e:pricing": "playwright test -c scripts/playwright.config.ts pricing.spec.ts"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.21",

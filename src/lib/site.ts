@@ -20,15 +20,13 @@ export const NAV = [
   { href: "/developers", label: "Developers" },
 ] as const;
 
-/** Mirrors apps/api/app/core/plans.py (display only; the API is the source of truth). */
+/** Plan copy and limits for display. Prices live in lib/pricing.ts (fixed USD / EUR / INR lists). */
 export const PLANS = [
   {
     id: "starter",
     name: "Starter",
-    price: 49,
     blurb: "One agent on your website, grounded in your content.",
     messages: "2,000",
-    pack: "$6 / 500 extra",
     cta: "Start free trial",
     featured: false,
     features: ["3 agents", "1 knowledge base · 20 documents", "Website chat widget", "Basic analytics", "Email support"],
@@ -36,10 +34,8 @@ export const PLANS = [
   {
     id: "pro",
     name: "Pro",
-    price: 99,
     blurb: "Automations and the channels your customers already use.",
     messages: "10,000",
-    pack: "$5 / 500 extra",
     cta: "Start free trial",
     featured: true,
     features: [
@@ -54,10 +50,8 @@ export const PLANS = [
   {
     id: "business",
     name: "Business",
-    price: 199,
     blurb: "Every channel, unlimited automation, built for teams.",
     messages: "30,000",
-    pack: "$4 / 500 extra",
     cta: "Start free trial",
     featured: false,
     features: [

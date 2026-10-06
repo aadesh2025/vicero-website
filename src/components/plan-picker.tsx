@@ -2,15 +2,17 @@
 
 import * as Slider from "@radix-ui/react-slider";
 import { useId, useState } from "react";
+import type { PlanId } from "@/lib/pricing";
 import { appLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { PriceNote, usePricing } from "./pricing-provider";
 import { Button } from "./ui";
 
-type Plan = { id: "starter" | "pro" | "business"; name: string; price: number; limit: number; pack: number };
+type Plan = { id: PlanId; name: string; limit: number };
 const PLANS: Plan[] = [
-  { id: "starter", name: "Starter", price: 49, limit: 2000, pack: 6 },
-  { id: "pro", name: "Pro", price: 99, limit: 10000, pack: 5 },
-  { id: "business", name: "Business", price: 199, limit: 30000, pack: 4 },
+  { id: "starter", name: "Starter", limit: 2000 },
+  { id: "pro", name: "Pro", limit: 10000 },
+  { id: "business", name: "Business", limit: 30000 },
 ];
 const PACK = 500;
 
@@ -25,6 +27,7 @@ export function PlanPicker() {
   const [messages, setMessages] = useState(6000);
   const [needs, setNeeds] = useState<Record<string, boolean>>({ meta: true, auto: false, more: false });
   const sliderId = useId();
+  const { plans, money } = usePricing();
 
   const minByNeeds = Math.max(0, ...NEEDS.filter((n) => needs[n.id]).map((n) => n.min));
   const minByVolume = PLANS.findIndex((p) => messages <= p.limit);
@@ -34,7 +37,8 @@ export function PlanPicker() {
   const plan = PLANS[idx];
   const extra = Math.max(0, messages - plan.limit);
   const packs = Math.ceil(extra / PACK);
-  const total = plan.price + packs * plan.pack;
+  const { price, pack } = plans[plan.id];
+  const total = price + packs * pack;
 
   return (
     <div className="grid gap-10 rounded-lg border border-border-strong bg-surface p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
@@ -78,17 +82,18 @@ export function PlanPicker() {
       <div className="flex flex-col rounded-md bg-ink p-6 text-white" aria-live="polite">
         <p className="text-sm text-white/70">The plan that fits</p>
         <p className="mt-1 font-display text-4xl font-bold">{plan.name}</p>
-        <p className="mt-5 font-display text-6xl font-bold leading-none">${total}<span className="text-lg font-medium text-white/60"> a month</span></p>
+        <p className="mt-5 font-display text-6xl font-bold leading-none">{money(total)}<span className="text-lg font-medium text-white/60"> a month</span></p>
         <dl className="mt-5 space-y-1.5 text-sm text-white/80">
-          <div className="flex justify-between"><dt>{plan.name} plan</dt><dd>${plan.price}</dd></div>
+          <div className="flex justify-between"><dt>{plan.name} plan</dt><dd>{money(price)}</dd></div>
           <div className="flex justify-between"><dt>Included messages</dt><dd>{plan.limit.toLocaleString("en-US")}</dd></div>
-          {packs > 0 && <div className="flex justify-between"><dt>{packs} extra pack{packs > 1 ? "s" : ""} of 500</dt><dd>${packs * plan.pack}</dd></div>}
+          {packs > 0 && <div className="flex justify-between"><dt>{packs} extra pack{packs > 1 ? "s" : ""} of 500</dt><dd>{money(packs * pack)}</dd></div>}
         </dl>
         <div className="mt-5 flex gap-1.5" aria-hidden="true">
           {PLANS.map((p, i) => <span key={p.id} className={cn("h-1.5 flex-1 rounded-full", i <= idx ? "bg-hl" : "bg-white/20")} />)}
         </div>
         <Button href={appLinks.signup} external variant="primary" className="mt-auto w-full">Start free trial</Button>
         <p className="mt-3 text-center text-xs text-white/60">10 days free. No card needed.</p>
+        <PriceNote className="mt-2 text-center text-xs text-white/60" />
       </div>
     </div>
   );

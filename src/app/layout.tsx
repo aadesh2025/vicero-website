@@ -3,6 +3,8 @@ import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from "next/font/
 import { ThemeProvider } from "next-themes";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
+import { PricingProvider } from "@/components/pricing-provider";
+import { getPricing } from "@/lib/currency.server";
 import "./globals.css";
 
 // Headlines: Bricolage Grotesque (tight, characterful). Body: Instrument Sans. Mono only for code samples.
@@ -18,7 +20,8 @@ export const metadata: Metadata = {
   openGraph: { title: "Vicero", description: "Answer customers from your own documents.", type: "website" },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const pricing = await getPricing();
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${body.variable} ${mono.variable} font-sans`}>
@@ -26,9 +29,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-surface focus:px-4 focus:py-2">
             Skip to content
           </a>
-          <Nav />
-          <main id="main">{children}</main>
-          <Footer />
+          <PricingProvider data={pricing}>
+            <Nav />
+            <main id="main">{children}</main>
+            <Footer />
+          </PricingProvider>
         </ThemeProvider>
       </body>
     </html>
