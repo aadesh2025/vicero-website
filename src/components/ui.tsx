@@ -50,7 +50,7 @@ export function SectionHead({ title, lead, className }: { title: ReactNode; lead
   return (
     <div className={cn("max-w-3xl", className)}>
       <h2 className="font-display text-4xl font-bold leading-[1.04] text-balance sm:text-5xl">{title}</h2>
-      {lead && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{lead}</p>}
+      {lead && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted [.text-center_&]:mx-auto">{lead}</p>}
     </div>
   );
 }
@@ -86,6 +86,18 @@ export function Shot({ name, alt, priority, className }: { name: string; alt: st
 }
 
 /** A quiet frame for real screenshots: hairline border, one soft shadow, no fake window chrome. */
+/** A fixed-shape window onto a screenshot: shows its top part, optionally fading out at the bottom. */
+export function CropShot({ name, alt, ratio = "16 / 9", fade, priority }: { name: string; alt: string; ratio?: string; fade?: boolean; priority?: boolean }) {
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{ aspectRatio: ratio, ...(fade ? { maskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)" } : {}) }}
+    >
+      <Shot name={name} alt={alt} priority={priority} className="!h-full object-cover object-top" />
+    </div>
+  );
+}
+
 export function ShotFrame({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn("overflow-hidden rounded-xl border border-border-strong bg-surface shadow-[0_40px_80px_-40px_rgb(13_14_18/0.4)]", className)}>{children}</div>;
 }

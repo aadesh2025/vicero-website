@@ -87,7 +87,7 @@ export function AnswerSource({ className }: { className?: string }) {
             <p className="font-display text-base font-bold">Chat on WhatsApp</p>
             <p className="text-sm text-faint">Aarav Mehta</p>
           </div>
-          <div className="flex min-h-[300px] flex-1 flex-col gap-3 px-6 py-6" aria-live="polite">
+          <div className="flex min-h-[230px] flex-1 flex-col gap-3 px-6 py-6" aria-live="polite">
             <div className="max-w-[85%] self-end rounded-xl rounded-br-sm bg-accent-strong px-4 py-3 text-[15px] leading-snug text-on-accent">{qa.q}</div>
             {phase === "typing" && (
               <div role="status" aria-label="Vicero is typing" className="flex w-16 items-center justify-center gap-1 self-start rounded-xl rounded-bl-sm bg-surface-2 py-3.5">
