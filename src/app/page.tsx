@@ -4,7 +4,7 @@ import { AnswerSource } from "@/components/answer-source";
 import { CodePane } from "@/components/dev/code-pane";
 import { PlanCards } from "@/components/plan-cards";
 import { ProductTabs } from "@/components/product-tabs";
-import { Button, Container, CropShot, FocusShot, SectionHead, ShotFrame, SnapRow } from "@/components/ui";
+import { Button, Container, CropShot, SectionHead, Shot, ShotFrame, SnapRow } from "@/components/ui";
 import { ChannelHub } from "@/components/visuals/channel-hub";
 import { WorkflowSteps } from "@/components/workflow-steps";
 import { highlight } from "@/lib/highlight";
@@ -43,10 +43,10 @@ export default async function Home() {
           <p className="mt-4 text-sm text-faint">10 days free. No card needed.</p>
         </Container>
         <Container className="mt-10 max-w-[1180px] sm:mt-16 lg:mt-20">
-          <ShotFrame className="rounded-b-none border-b-0">
-            {/* Phone: the stats and activity panel up close. Tablet and up: the dashboard, fading out. */}
+          <ShotFrame className="sm:rounded-b-none sm:border-b-0">
+            {/* The whole dashboard on every screen size; on phones it fades out lower down, tablet and up crop a little less. */}
             <div className="sm:hidden">
-              <FocusShot name="dashboard" ratio="4 / 3.3" zoom={2.08} x={18.2} y={9} alt="The Vicero dashboard: 3.8K conversations in 30 days, 89% resolved without a person, and daily activity" />
+              <Shot name="dashboard" alt="The Vicero dashboard: 3.8K conversations in 30 days, 89% resolved without a person, with daily activity and a channel breakdown" priority />
             </div>
             <div className="hidden sm:block">
               <CropShot name="dashboard" ratio="16 / 8.6" fade priority alt="The Vicero dashboard for a furniture shop: 3.8K conversations in 30 days, 89% resolved without a person, with daily activity" />

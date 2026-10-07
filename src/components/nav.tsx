@@ -43,6 +43,7 @@ export function Nav() {
   }, [open]);
 
   return (
+    <>
     <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1240px] items-center gap-8 px-5 sm:px-8">
         <Link href="/" aria-label="Vicero home" className="inline-flex min-h-11 shrink-0 items-center">
@@ -84,15 +85,17 @@ export function Nav() {
           </button>
         </div>
       </div>
+    </header>
 
-      {open && (
+    {/* Rendered outside <header>: the header's backdrop blur would make this "fixed" panel size itself to the header instead of the screen. */}
+    {open && (
         <div
           id="mobile-menu"
           ref={panelRef}
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col overflow-y-auto bg-bg px-5 pb-8 pt-2 sm:px-8 lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col overflow-y-auto overscroll-contain bg-bg px-5 pb-8 pt-2 sm:px-8 lg:hidden"
         >
           <nav aria-label="Mobile" className="flex flex-col">
             {NAV.map((n) => (
@@ -114,6 +117,6 @@ export function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

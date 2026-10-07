@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: ".",
-  testMatch: /(site|responsive|pricing|demo\/capture)\.spec\.ts/,
+  testMatch: /(site|responsive|pricing|mobile|demo\/capture)\.spec\.ts/,
   timeout: 600_000,
   workers: 1,
   reporter: "list",
