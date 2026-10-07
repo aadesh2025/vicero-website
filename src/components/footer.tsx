@@ -33,7 +33,7 @@ const cols = [
   {
     title: "Account",
     links: [
-      { label: "Log in", href: "/login" },
+      { label: "Log in", href: appLinks.login },
       { label: "Start free trial", href: appLinks.signup },
     ],
   },

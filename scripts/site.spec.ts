@@ -64,3 +64,27 @@ for (const theme of THEMES) {
     }
   });
 }
+
+// Every Log in / Start free trial / Get started link, on every page, opens the hosted app's sign-in page.
+test("login and trial buttons all go to the app", async ({ page }) => {
+  const APP = "https://viceroai.duckdns.org/login";
+  let checked = 0;
+  for (const route of ROUTES) {
+    await page.goto(BASE + route, { waitUntil: "networkidle" });
+    // Open the phone menu too, so its buttons are covered on a narrow viewport.
+    const links = await page.locator("a").evaluateAll((as) =>
+      as.filter((a) => /^(log in|start free trial|free trial|create a free account|continue with google)$/i.test((a.textContent ?? "").trim())).map((a) => (a as HTMLAnchorElement).href),
+    );
+    for (const href of links) {
+      checked++;
+      expect(href.startsWith(APP), `${route}: ${href}`).toBe(true);
+    }
+  }
+  expect(checked).toBeGreaterThan(20);
+
+  // The login page's email form hands off to the same place.
+  await page.goto(BASE + "/login", { waitUntil: "networkidle" });
+  await page.getByLabel("Work email").fill("maya@lumenhome.example");
+  const [req] = await Promise.all([page.waitForRequest((r) => r.url().startsWith(APP), { timeout: 15_000 }).catch(() => null), page.getByRole("button", { name: "Continue with email" }).click()]);
+  expect(req?.url() ?? page.url()).toContain("viceroai.duckdns.org/login");
+});

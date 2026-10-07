@@ -2,13 +2,14 @@ export const PRODUCT_NAME = "Vicero";
 export const TAGLINE = "The intelligence behind your business.";
 
 /** The SaaS app. Auth lives there; the site only deep-links. */
-export const APP_URL = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3001").replace(/\/$/, "");
+export const APP_URL = (process.env.NEXT_PUBLIC_APP_URL ?? "https://viceroai.duckdns.org").replace(/\/$/, "");
 export const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? `${APP_URL}/docs`;
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@vicero.ai";
 
 export const appLinks = {
   login: `${APP_URL}/login`,
-  signup: `${APP_URL}/signup`,
+  // "Log in" and "Start free trial" both open the app's sign-in page; new users start a trial from there.
+  signup: `${APP_URL}/login`,
 };
 
 export const NAV = [

@@ -67,7 +67,7 @@ export function Nav() {
         </nav>
         <div className="ml-auto hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <Button href="/login" variant="ghost">Log in</Button>
+          <Button href={appLinks.login} external variant="ghost">Log in</Button>
           <Button href={appLinks.signup} external>Start free trial</Button>
         </div>
         <div className="ml-auto flex items-center gap-1 lg:hidden">
@@ -112,7 +112,7 @@ export function Nav() {
             <a href={DOCS_URL} className="flex min-h-14 items-center border-b border-border font-display text-2xl font-bold">Docs</a>
           </nav>
           <div className="mt-auto grid gap-3 pt-8 sm:grid-cols-2">
-            <Button href="/login" variant="secondary" size="lg" className="w-full" >Log in</Button>
+            <Button href={appLinks.login} external variant="secondary" size="lg" className="w-full">Log in</Button>
             <Button href={appLinks.signup} external size="lg" className="w-full">Start free trial</Button>
           </div>
         </div>

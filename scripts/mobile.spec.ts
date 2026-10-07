@@ -11,7 +11,8 @@ const BASE = process.env.SITE_URL ?? "http://localhost:3002";
 for (const name of ["iPhone 13", "Pixel 7", "iPhone SE"] as const) {
   test.describe(name, () => {
     // Mobile viewport, pixel ratio, touch and user agent (the browser stays Chrome).
-    const { defaultBrowserType: _ignored, ...mobile } = devices[name];
+    const mobile = { ...devices[name] } as Partial<(typeof devices)[typeof name]>;
+    delete mobile.defaultBrowserType;
     test.use(mobile);
 
     test("burger menu opens full screen, scrolls the page lock, navigates and closes", async ({ page }) => {
